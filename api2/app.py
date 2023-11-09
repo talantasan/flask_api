@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -16,8 +16,23 @@ class Student(db.Model):
 @app.route('/')
 def home():
     std = Student.query.all()
-    return render_template('main.html', std=std) 
+    if std == []:
+        return "<center><h2>No users were found</h2></center>", 204
+    else:
+        return render_template('main.html', std=std) 
 
+@app.route('/students', methods=['POST'])
+def add_user():
+    std = Student(name=request.json['name'], email=request.json['email'])
+    db.session.add(std)
+    db.session.commit()
+    return f"new user: {std.id}.{std.name} - {std.email}", 200
+
+@app.route('/students/<int:id>', methods=['GET'])
+def get_user(id):
+    std = Student.query.get_or_404(id)
+    
+    return render_template('students.html', std=std)
 
 
 if __name__ == '__main__':

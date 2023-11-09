@@ -3,8 +3,8 @@
 {% block content %}
 <center>
     <p><h1>Students List</h1></p>
-    {% for st in {{std}} %}
-        <p>{{st.name}} {{st.email}}</p>
+    {% for st in std %}
+        <p><strong>{{st.name}}-{{st.email}}</strong></p>
     {% endfor %}
 </center>
 {% endblock %}

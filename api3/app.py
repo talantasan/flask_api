@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from marshmallow import Schema, fields
@@ -6,12 +6,15 @@ from marshmallow import Schema, fields
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
+app.json.sort_keys = False
+
+
 db = SQLAlchemy(app)
 
 class Books(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
-    author = db.Column(db.String(100), nullable=False, unique=True)
+    author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -54,7 +57,21 @@ def get_books():
 
 @app.route('/books', methods=['POST'])
 def add_book():
-    pass
+    data = request.get_json()
+    
+    book = Books(
+        name = data.get("name"),
+        author = data.get("author"),
+        description = data.get("description")
+    )
+    book.save()
+    
+    serializer = BooksSchema()
+    
+    data = serializer.dump(book)
+    
+    return jsonify(data, 201)
+    
 
 @app.route('/books/<int:id>', methods=['GET'])
 def get_book_by_id(id):

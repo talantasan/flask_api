@@ -35,7 +35,7 @@ class Books(db.Model):
         
     def delete(self):
         db.session.delete(self)
-        db.ession.commit()
+        db.session.commit()
 
 class BooksSchema(Schema):
     id = fields.Integer()
@@ -75,17 +75,45 @@ def add_book():
 
 @app.route('/books/<int:id>', methods=['GET'])
 def get_book_by_id(id):
-    pass
+    book = Books.get_by_id(id)
+    serializer = BooksSchema()
+    data = serializer.dump(book)
+    
+    return jsonify(data, 200)
 
 
 @app.route('/books/<int:id>', methods=['PUT'])
 def update_book(id):
-    pass
+    book = Books.get_by_id(id)
+    data = request.get_json()
+    
+    book.name = data.get("name")
+    book.author = data.get("author")
+    
+    db.session.commit()
+    serializer = BooksSchema()
+    book_update = serializer.dump(book)
+    
+    return jsonify(book_update, 200)
+    
+    
 
 
 @app.route('/books/<int:id>', methods=['DELETE'])
 def del_book(id):
-    pass
+    book = Books.get_by_id(id)
+    book.delete()
+    
+    return jsonify({"message": "deleted"}, 204)
+
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({"message": "Internal Server Error. Check!!!"})
+
+
+@app.errorhandler(404)
+def internal_error(error):
+    return jsonify({"message": "Not found. Check!!!"})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

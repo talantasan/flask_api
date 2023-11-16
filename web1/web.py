@@ -1,16 +1,18 @@
-from flask import Flask
-import requests, threading
+from flask import Flask, render_template
+from datetime import datetime
+import requests
 
 app = Flask(__name__)
 
-data = requests.get("http://20.55.62.182:5000/employee")
+employee_all = requests.get("http://20.55.62.182:8080/employee")
 
 @app.route('/')
 def home():
-    return f"""<center> 
-            <p><h1>Welcome to home page<h1></p>
-            <p>{data.json()}</p>
-            </center>"""
+    return render_template('home.html', utc_dt=datetime.utcnow())
+
+@app.route('/employee')
+def employee():
+    return render_template('employee.html')
             
 if __name__ == '__main__':
     app.run(port=5001, host='0.0.0.0', debug=True, threaded=True)

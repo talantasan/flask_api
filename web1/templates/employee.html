@@ -2,7 +2,18 @@
 {% block title %}home{% endblock %}
 {% block content %}
 <center>
+    <br>
     <h1>Employee Info</h1>
+    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
     <p><h3>Employee Info here displayed</h3></p>
+    <p>
+        <div class="row justify-content-md-center">
+            <div class="col-5" style="background-color: bisque;">
+                {% for emp in employee %}
+                    <p><h3>{{emp.name}} - {{emp.email}}</h3></p>
+                {% endfor %}
+            </div>
+        </div>
+    </p>
 </center>
 {% endblock %}

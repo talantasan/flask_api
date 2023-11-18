@@ -1,0 +1,3 @@
+This page is created for development purpose. 
+We will be practicing /empoyee api created with Flask. 
+Developed by Talantbek Karmyshakov

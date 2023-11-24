@@ -4,13 +4,15 @@ import requests
 
 app = Flask(__name__)
 
+EMPLOYEE_ENDPOINT = "20.55.62.182"
+
 @app.route('/')
 def home():
     return render_template('home.html', utc_dt=datetime.utcnow())
 
 @app.route('/employee')
 def employee():
-    employee_all = requests.get("http://20.55.62.182:8080/employee")
+    employee_all = requests.get(f"http://{EMPLOYEE_ENDPOINT}:8080/employee")
     employee_all = employee_all.json()
     return render_template('employee.html', employee=employee_all)
 

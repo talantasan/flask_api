@@ -1,10 +1,10 @@
 from flask import Flask, render_template
 from datetime import datetime
-import requests
+import requests, os
 
 app = Flask(__name__)
 
-EMPLOYEE_ENDPOINT = "20.55.62.182"
+EMPLOYEE_API_URI = os.environ.get('EMP_URI')
 
 @app.route('/')
 def home():
@@ -12,7 +12,7 @@ def home():
 
 @app.route('/employee')
 def employee():
-    employee_all = requests.get(f"http://{EMPLOYEE_ENDPOINT}:8080/employee")
+    employee_all = requests.get(f"http://{EMPLOYEE_API_URI}:8080/employee")
     employee_all = employee_all.json()
     return render_template('employee.html', employee=employee_all)
 

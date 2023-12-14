@@ -33,4 +33,4 @@ spec:
     - destination:
         port:
           number: 5000
-        host: api4-svc
+        host: api4-svc.default.svc.cluster.local

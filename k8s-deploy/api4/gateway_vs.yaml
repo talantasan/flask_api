@@ -20,7 +20,7 @@ metadata:
   name: api4-vs
 spec:
   hosts:
-  - "employee.spacextech.com"
+  - api4-svc.default.svc.cluster.local
   gateways:
   - api4-gateway
   http:

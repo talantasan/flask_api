@@ -18,6 +18,8 @@ spec:
       containers:
       - image: ktalant/api4:v1
         name: api4
+        ports:
+        - containerPort: 5000
 ---
 apiVersion: v1
 kind: Service

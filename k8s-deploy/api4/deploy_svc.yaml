@@ -29,7 +29,8 @@ metadata:
     app: api4
 spec:
   ports:
-  - port: 5000
+  - port: 8080
+    targetPort: 5000
     protocol: TCP
   selector:
     app: api4

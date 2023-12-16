@@ -12,7 +12,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "employee.spacextech.com"
+    - "*"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -32,5 +32,5 @@ spec:
     route:
     - destination:
         port:
-          number: 5000
+          number: 8080
         host: api4-svc.default.svc.cluster.local

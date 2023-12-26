@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "api4.fullname" . }}-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - {{ include "api4.fullname" . }}-gw
+  http:
+  - match:
+    - uri:
+        prefix: /employee
+    # - uri:
+    #     prefix: /delay
+    route:
+    - destination:
+        port:
+          number: 8080
+        host: {{ include "api4.fullname" . }}.default.svc.cluster.local

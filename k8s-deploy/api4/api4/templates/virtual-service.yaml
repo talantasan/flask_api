@@ -6,7 +6,7 @@ spec:
   hosts:
   - "*"
   gateways:
-  - {{ include "api4.fullname" . }}-gw
+  - {{ include "api4.fullname" . | nindent 4 }}-gw
   http:
   - match:
     - uri:

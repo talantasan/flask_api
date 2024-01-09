@@ -28,6 +28,13 @@ class EmployeeSchema(ma.SQLAlchemyAutoSchema):
         model = Employee
         include_fk = True
 
+@app.route('/', methods=['GET'])
+def home():
+    return """
+            <p><h1>This is Talant-API4 home page</h1><p>
+            <p><h2> /employee path for listing employees</h2></p>
+    """
+
 @app.route('/employee', methods=['GET'])
 def get_all():
     emp = Employee.query.all()

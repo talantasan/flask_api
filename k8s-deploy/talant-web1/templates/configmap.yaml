@@ -1,0 +1,12 @@
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: {{ include "talant-web1.fullname" . }}-configmap 
+data:
+  # Configuration values can be set as key-value properties
+  api4_endpoint: {{ .Values.configMap.api4_endpoint }} 
+  
+  # # Or set as complete file contents (even JSON!)
+  # keys: | 
+  #   image.public.key=771 
+  #   rsa.public.key=42

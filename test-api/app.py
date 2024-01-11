@@ -1,12 +1,11 @@
-from flask import Flask
+from flask import Flask, request
 from os import environ
 
 app = Flask(__name__)
-MY_DB_HOST = environ.get('DB_NAME')
 
 @app.route('/')
 def home():
-    return f"Hello World {MY_DB_HOST}"
+    return f"{request.host}"
 
 
 if __name__ == '__main__':

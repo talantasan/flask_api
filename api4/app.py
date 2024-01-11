@@ -2,11 +2,13 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
 app.json.sort_keys = False
+HOST_IP = os.environ.get('HOST_IP')
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -30,10 +32,9 @@ class EmployeeSchema(ma.SQLAlchemyAutoSchema):
 
 @app.route('/', methods=['GET'])
 def home():
-    return """
-            <p><h1>This is Talant-API4 home page</h1><p>
-            <p><h2> /employee path for listing employees</h2></p>
-    """
+    data = [{"name": "talant-api4", "version": "V1",
+             "hostname": f"{HOST_IP}"}]
+    return jsonify(data)
 
 @app.route('/employee', methods=['GET'])
 def get_all():
